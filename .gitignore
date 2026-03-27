@@ -1,0 +1,7 @@
+whisper/
+*.pt
+*.bin
+audios/
+videoss/
+chunks/
+transcripts/
