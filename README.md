@@ -1,32 +1,27 @@
-RAG-Based AI Teaching Assistant
-Upload a lecture, podcast, or any audio/video — ask questions, get answers grounded in what was actually said.
-What it does
-Most AI assistants just make stuff up. This one only answers from your content. You drop in a video or audio file, it transcribes it, indexes it, and then when you ask something, it finds the relevant parts and uses those to generate a response.
-How it works
+🧠 RAG-Based AI Teaching Assistant
 
-Audio/video gets transcribed via Whisper
-Transcript is split into overlapping chunks so context isn't lost at boundaries
-Chunks are embedded and stored locally (the embeddings.joblib file)
-On a query, the closest chunks are retrieved semantically
-Those chunks get passed to an LLM which produces the final answer
+An AI-powered system that answers user queries from custom audio/video content using Retrieval-Augmented Generation (RAG).
 
-Stack
-
-Streamlit — UI
-Whisper — speech-to-text
-Sentence Transformers — embeddings + vector search
-Claude / OpenAI — answer generation
-
-Project layout
+🚀 Features
+🎧 Converts audio/video to text using speech recognition
+📄 Splits text into meaningful chunks
+🧠 Generates embeddings for semantic search
+🔍 Retrieves relevant content based on user query
+💬 Uses LLM to generate accurate answers
+🛠️ Tech Stack
+Python
+Streamlit
+Whisper (Speech-to-Text)
+Embeddings (Vector Search)
+LLM (for response generation)
+📂 Project Structure
 rag_based_ai/
-├── app.py                 # Streamlit frontend
-├── process_incoming.py    # Entry point for new files
-├── process_videos.py      # Handles video → audio extraction
-├── stt.py                 # Whisper transcription
-├── create_chunks.py       # Splits transcript into chunks
-├── read_chunks.py         # Loads chunks + runs similarity search
-└── embeddings.joblib      # Persisted embeddings (auto-generated)
-Getting started
-bashpip install -r requirements.txt
-streamlit run app.py
-Drop a file in the UI, wait for processing, then start asking questions.
+│── app.py
+│── process_incoming.py
+│── create_chunks.py
+│── read_chunks.py
+│── process_videos.py
+│── stt.py
+│── embeddings.joblib
+│── README.md
+│── .gitignore
