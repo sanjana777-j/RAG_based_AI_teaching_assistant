@@ -1,84 +1,32 @@
-# 🎥 RAG-Based Lecture Video Search System
+RAG-Based AI Teaching Assistant
+Upload a lecture, podcast, or any audio/video — ask questions, get answers grounded in what was actually said.
+What it does
+Most AI assistants just make stuff up. This one only answers from your content. You drop in a video or audio file, it transcribes it, indexes it, and then when you ask something, it finds the relevant parts and uses those to generate a response.
+How it works
 
-## 🚀 Overview
-This project is an AI-powered system that converts lecture videos into searchable knowledge. Users can ask questions, and the system retrieves the most relevant content using semantic search.
+Audio/video gets transcribed via Whisper
+Transcript is split into overlapping chunks so context isn't lost at boundaries
+Chunks are embedded and stored locally (the embeddings.joblib file)
+On a query, the closest chunks are retrieved semantically
+Those chunks get passed to an LLM which produces the final answer
 
----
+Stack
 
-## 🧠 How It Works
+Streamlit — UI
+Whisper — speech-to-text
+Sentence Transformers — embeddings + vector search
+Claude / OpenAI — answer generation
 
-1. Video → Audio extraction (FFmpeg)
-2. Audio → Text transcription using Whisper
-3. Text → Chunking into smaller segments
-4. Chunks → Embeddings using BGE-M3 (via Ollama)
-5. Query → Converted to embedding
-6. Cosine similarity used to retrieve top matching chunks
-
----
-
-## ⚙️ Tech Stack
-
-- Python
-- Whisper (Speech-to-Text)
-- Ollama (Local LLM runtime)
-- BGE-M3 (Embedding model)
-- Pandas
-- NumPy
-- Scikit-learn (Cosine Similarity)
-
----
-
-## 📂 Project Structure
-videos/
-audios/
-transcripts/
-chunks/
-read_chunks.py
-process_videos.py
-
----
-
-## 🔍 Features
-
-- Converts lecture videos into searchable text
-- Fully local AI pipeline (no API required)
-- Semantic search using embeddings
-- Efficient retrieval using cosine similarity
-
----
-
-## 💡 Example
-
-**Input:**
-What is HTML?
-Relevant chunks from lecture videos explaining HTML concepts
-
----
-
-## 🧠 Key Concepts
-
-- Retrieval-Augmented Generation (RAG)
-- Embeddings & Vector Similarity
-- Cosine Similarity
-- Speech-to-Text Processing
-
----
-
-## ⚠️ Limitations
-
-- No UI (currently terminal-based)
-- No final LLM answer generation (retrieves chunks only)
-
----
-
-## 🚀 Future Improvements
-
-- Add LLM-based answer generation
-- Build UI (Streamlit / Web app)
-- Use FAISS for faster retrieval
-
----
-
-## 👤 Author
-
-Sanjana Shetty
+Project layout
+rag_based_ai/
+├── app.py                 # Streamlit frontend
+├── process_incoming.py    # Entry point for new files
+├── process_videos.py      # Handles video → audio extraction
+├── stt.py                 # Whisper transcription
+├── create_chunks.py       # Splits transcript into chunks
+├── read_chunks.py         # Loads chunks + runs similarity search
+└── embeddings.joblib      # Persisted embeddings (auto-generated)
+Getting started
+bashpip install -r requirements.txt
+streamlit run app.py
+Drop a file in the UI, wait for processing, then start asking questions.
